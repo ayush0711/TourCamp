@@ -15,7 +15,7 @@ app.get("/campgrounds", (req, res) => {
         { name: "Akshay Dubey", image: "https://pawnacamp.com/wp-content/uploads/2018/01/Pawna-lake-camping-camp-F-new-768x512.jpg.webp" },
         { name: "Harsh Jain", image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" }
     ]
-    res.render("campgrounds");
+    res.render("campgrounds", { campgrounds: campgrounds });
 });
 
 app.listen(3000, () => {
