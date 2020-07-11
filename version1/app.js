@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
-const bodyparser = require("body-parser");
+const bodyparser = require("body-parser"),
+    mongoose = require("mongoose");
+
+mongoose.connect("mongod://localhost/Tour_Camp");
 
 app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({ extended: true }));
