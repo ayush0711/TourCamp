@@ -1,38 +1,18 @@
 const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"),
+    Campground = require("./models/campground"),
+    seedDB = require("./seeds");
+
 
 mongoose.connect("mongodb://localhost:27017/TourCamp", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-
-app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({ extended: true }));
-
-//schema setup
-const campgroundschema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-const campground = mongoose.model("campground", campgroundschema);
-
-// campground.create({
-//     name: "Kanha Agrawal",
-//     image: "https://cdn.pixabay.com/photo/2019/10/03/11/14/camp-4522970__480.jpg ",
-//     description: "This is a huge granite hill, no bathrooms, no water"
-// }, function(err, Campground) {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log("Newly Created Campground");
-//         console.log(Campground);
-//     }
-// });
-
+app.set("view engine", "ejs");
+seedDB();
 
 
 app.get("/", (req, res) => {
@@ -42,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.get("/campgrounds", (req, res) => {
     //gt all camp on db
-    campground.find({}, function(err, allCampgrounds) {
+    Campground.find({}, function(err, allCampgrounds) {
         if (err) {
             console.log(err);
         } else {
@@ -50,34 +30,31 @@ app.get("/campgrounds", (req, res) => {
         }
 
     });
-    //res.render("campgrounds", { campgrounds: campgrounds });
 });
-
+// CREATE- add new campground to DB
 app.post("/campgrounds", (req, res) => {
     var name = req.body.name;
     const image = req.body.image;
     const desc = req.body.description;
     const newCampground = { name: name, image: image, description: desc }
         //create a new camp for db
-    campground.create(newCampground, function(err, newlycreated) {
+    Campground.create(newCampground, function(err, newlycreated) {
         if (err) {
             console.log(err);
         } else {
             res.redirect("/campgrounds");
         }
     });
-    //campgrounds.push(newCampground);
-    //res.redirect("/campgrounds");
 });
 
-
+//New- show form to create new campground
 app.get("/campgrounds/new", (req, res) => {
     res.render("new.ejs");
 });
 //show more info about one campground
 app.get("/campgrounds/:id", (req, res) => {
     //find camp with id
-    campground.findById(req.params.id, function(err, foundCampground) {
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
         if (err) {
             console.log(err);
         } else {
