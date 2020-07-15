@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const mongoose = require("mongoose"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
+    methodOverride = require("method-override"),
     Campground = require("./models/campground"),
     Comment = require("./models/comment"),
     User = require("./models/user");
@@ -21,7 +22,7 @@ mongoose.connect("mongodb://localhost:27017/TourCamp", {
 app.use(bodyparser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
-
+app.use(methodOverride("_method"));
 //seedDB(); // seeds the db
 
 // PASSPORT CONFIGURATION
