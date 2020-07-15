@@ -7,7 +7,6 @@ const middleware = require("../middleware");
 //Comments New
 router.get("/new", middleware.isLoggedIn, (req, res) => {
     // find campground by id
-    console.log(req.params.id);
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
             console.log(err);
@@ -36,7 +35,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
                     comment.save();
                     campground.comments.push(comment);
                     campground.save();
-                    console.log(comment);
+
                     res.redirect('/campgrounds/' + campground._id);
                 }
             });
