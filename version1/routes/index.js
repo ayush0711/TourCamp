@@ -19,11 +19,11 @@ router.post("/register", function(req, res) {
     const newUser = new User({ username: req.body.username });
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
-            req.flash("error", err.message);
-            return res.render("register");
+            console.log(err);
+            return res.render("register", { error: err.message });
         }
         passport.authenticate("local")(req, res, function() {
-            req.flash("success", "Welcome to TourCamp" + " " + user.username);
+            req.flash("success", "Welcome to TourCamp" + " " + req.body.username);
             res.redirect("/campgrounds");
         });
     });
@@ -43,6 +43,16 @@ router.get("/logout", function(req, res) {
     req.logout();
     req.flash("success", "logged you");
     res.redirect("/campgrounds");
+});
+
+// show register form
+router.get("/register", function(req, res) {
+    res.render("register", { page: 'register' });
+});
+
+//show login form
+router.get("/login", function(req, res) {
+    res.render("login", { page: 'login' });
 });
 
 

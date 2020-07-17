@@ -1,3 +1,7 @@
+body {
+    background-color: lightskyblue;
+}
+
 .thumbnail img {
     width: 100%;
     height: auto;
