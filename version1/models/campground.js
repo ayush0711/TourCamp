@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 
 const campgroundschema = new mongoose.Schema({
     name: String,
-    price: String,
+    price: Number,
     image: String,
     description: String,
+    createdAt: { type: Date, default: Date.now },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
