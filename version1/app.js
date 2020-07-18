@@ -9,7 +9,8 @@ passport = require("passport"),
     Campground = require("./models/campground"),
     Comment = require("./models/comment"),
     User = require("./models/user");
-seedDB = require("./seeds");
+session = require("express-session"),
+    seedDB = require("./seeds");
 
 //requring routes
 var commentRoutes = require("./routes/comments"),
@@ -42,8 +43,9 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
-    res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+
     next();
 });
 
