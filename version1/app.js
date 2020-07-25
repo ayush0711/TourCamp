@@ -17,7 +17,12 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index")
 
-mongoose.connect("mongodb://localhost:27017/TourCamp", {
+// mongoose.connect("mongodb://localhost:27017/TourCamp", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// });
+
+mongoose.connect("mongodb+srv://Tour_camp:ayushkanha@tourcamp.bbfjo.mongodb.net/tourcamp?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
