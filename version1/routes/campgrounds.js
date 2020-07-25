@@ -32,12 +32,12 @@ router.get("/", (req, res) => {
                     });
                 }
             });
-        })
+        });
     } else {
 
         // Get all campgrounds from DB
         Campground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function(err, allCampgrounds) {
-            Campground.count().exec(function(err, count) {
+            Campground.countDocuments().exec(function(err, count) {
                 if (err) {
                     console.log(err);
                 } else {
@@ -48,7 +48,7 @@ router.get("/", (req, res) => {
                         page: 'campgrounds',
                         noMatch: noMatch,
                         search: false
-                    })
+                    });
                 }
             });
         });
